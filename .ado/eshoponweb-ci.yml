@@ -41,30 +41,36 @@ stages:
       displayName: Build
       inputs:
         command: 'build'
-        projects: '**/*.sln'
+        projects: '**/*.sln'  # Path to the projects to build
+                              # **/*.sln means: all solution files in the repository
+                              # This ensures the entire application is built
 
     # Run unit tests
     - task: DotNetCoreCLI@2
       displayName: Test
       inputs:
         command: 'test'
-        projects: 'tests/UnitTests/*.csproj'
+        projects: 'tests/UnitTests/*.csproj'   # Path to the test projects
+                                                # tests/UnitTests/*.csproj means: all test project files in this folder
+                                                # Only unit tests will be executed here
 
     # Publish application (prepare for deployment)
     - task: DotNetCoreCLI@2
       displayName: Publish
       inputs:
-        command: 'publish'
-        publishWebProjects: true
-        arguments: '-o $(Build.ArtifactStagingDirectory)'
+        command: 'publish'       # → Prepares the application for deployment (compiles + packages output)
+        publishWebProjects: true # Automatically targets all web projects in the solution
+                                 # Ensures only deployable web apps are published
+        arguments: '-o $(Build.ArtifactStagingDirectory)'  # Output directory for the published files
+                                                           # $(Build.ArtifactStagingDirectory) is a temporary folder used to store artifacts
 
     # Publish application artifact
     - task: PublishPipelineArtifact@1
       displayName: Publish Artifacts - Website
       inputs:
-        targetPath: '$(Build.ArtifactStagingDirectory)'
-        artifact: 'Website'
-        publishLocation: 'pipeline'
+        targetPath: '$(Build.ArtifactStagingDirectory)'  # Path of the files to publish , $(Build.ArtifactStagingDirectory) contains the output from the publish step
+        artifact: 'Website'                              # This is how the artifact will be referenced in later stages
+        publishLocation: 'pipeline'                      # Location where the artifact will be stored , 'pipeline' means it will be stored within Azure DevOps pipeline storage
 
     # Publish infrastructure artifact (Bicep file)
     - task: PublishPipelineArtifact@1
@@ -72,4 +78,4 @@ stages:
       inputs:
         targetPath: '$(Build.SourcesDirectory)/infra/webapp.bicep'
         artifact: 'Bicep'
-        publishLocation: 'pipeline'
+        publishLocation: 'pipeline' 
