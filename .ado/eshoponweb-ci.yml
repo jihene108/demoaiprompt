@@ -71,11 +71,3 @@ stages:
         targetPath: '$(Build.ArtifactStagingDirectory)'  # Path of the files to publish , $(Build.ArtifactStagingDirectory) contains the output from the publish step
         artifact: 'Website'                              # This is how the artifact will be referenced in later stages
         publishLocation: 'pipeline'                      # Location where the artifact will be stored , 'pipeline' means it will be stored within Azure DevOps pipeline storage
-
-    # Publish infrastructure artifact (Bicep file)
-    - task: PublishPipelineArtifact@1
-      displayName: Publish Artifacts - Bicep
-      inputs:
-        targetPath: '$(Build.SourcesDirectory)/infra/webapp.bicep'
-        artifact: 'Bicep'
-        publishLocation: 'pipeline' 
