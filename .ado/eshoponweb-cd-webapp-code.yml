@@ -30,4 +30,7 @@ stages:
         azureSubscription: '$(azureserviceconnection)'
         appType: 'webApp'
         WebAppName: '$(webappname)'
-        package: '$(Pipeline.Workspace)/eshoponweb-ci/Website/**/*.zip'
+        package: '$(Pipeline.Workspace)/eshoponweb-ci/Website/**/Web.zip'
+        AppSettings: "-UseOnlyInMemoryDatabase true -ASPNETCORE_ENVIRONMENT Development"
+
+          
