@@ -9,7 +9,7 @@ resources:
 
 variables:
   azureserviceconnection: 'azure subs'
-  webappname: 'eshoponwebglobalazure'
+  webappname: 'eshoponwebglobalazure-abajgnarduezg9bq.francecentral-01'
 
 stages:
 - stage: Deploy
