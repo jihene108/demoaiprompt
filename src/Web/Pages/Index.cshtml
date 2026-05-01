@@ -45,3 +45,23 @@
         </div>
     }
 </div>
+
+@section scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.esh-generate-ai-description').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var card = button.closest('.esh-catalog-item');
+                    if (!card) return;
+                    var description = card.querySelector('.esh-catalog-ai-description');
+                    if (!description) return;
+                    if (description.style.display === 'none' || description.style.display === '') {
+                        description.style.display = 'block';
+                    } else {
+                        description.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+}
